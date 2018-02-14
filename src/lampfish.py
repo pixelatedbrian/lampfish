@@ -122,7 +122,7 @@ def action(action):
 
     # print("message: ", message)
 
-    return render_template('main.html', action)
+    return render_template('main.html', action=action)
 
 
 if __name__ == "__main__":

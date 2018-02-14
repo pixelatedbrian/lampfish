@@ -12,6 +12,9 @@ def send_to_lights(data):
         mode_brightness
         ex: 'on_255' OR 'on_128' OR 'off_0'
     '''
+
+    print("send_to_rabbitmq -> sent:", data)
+
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 
     channel = connection.channel()
@@ -21,7 +24,6 @@ def send_to_lights(data):
     channel.basic_publish(exchange="",
                           routing_key="lampfish",
                           body=data)
-    print("send_to_rabbitmq -> sent:", data)
     connection.close()
 
 
@@ -48,14 +50,14 @@ def action(action):
     # run_strip(mode=action)
     # If the action part of the URL is "on," execute the code indented below:
     if action == "on":
-        # Set the pin high:
-        send_to_lights("on_255")
-        # Save the status message to be passed into the template:
         print("action -> Sent 'lamp on' to queue")
 
+        send_to_lights("on_255")
+
     if action == "off":
-        send_to_lights("off_0")
         print("action -> Sent 'lamp off' to queue")
+
+        send_to_lights("off_0")
 
     # print("message: ", message)
 

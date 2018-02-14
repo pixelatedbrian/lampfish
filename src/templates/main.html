@@ -14,10 +14,10 @@
 
    {% if lamp_on == true %}
       is currently <strong>on</strong></h2><div class="row"><div class="col-md-2">
-      <a href="/{{pin}}/off" class="btn btn-block btn-lg btn-default" role="button">Turn off</a></div></div>
+      <a href="/{{lamp_on}}/off" class="btn btn-block btn-lg btn-default" role="button">Turn off</a></div></div>
    {% else %}
       is currently <strong>off</strong></h2><div class="row"><div class="col-md-2">
-      <a href="/{{pin}}/on" class="btn btn-block btn-lg btn-primary" role="button">Turn on</a></div></div>
+      <a href="/{{lamp_on}}/on" class="btn btn-block btn-lg btn-primary" role="button">Turn on</a></div></div>
    {% endif %}
 
 

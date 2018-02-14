@@ -76,8 +76,8 @@ def run_strip(brightness=255, mode="default"):
 
 @app.route("/")
 def main():
-    mode_data = {"lamp_on": False,
-                 "lamp_brigtness": 255}
+    # mode_data = {"lamp_on": False,
+    #              "lamp_brightness": 255}
 
     # For each pin, read the pin state and store it in the pins dictionary:
     # for pin in pins:
@@ -87,7 +87,7 @@ def main():
     # templateData = {'pins': pins}
 
     # Pass the template data into the template main.html and return it to the user
-    return render_template('main.html', **mode_data)
+    return render_template('main.html', lamp_on=False, lamp_brightness=255)
 
 
 # The function below is executed when someone requests a URL with the pin number and action in it:

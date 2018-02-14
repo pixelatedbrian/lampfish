@@ -87,7 +87,7 @@ def run_strip(mode="off", brightness=255):
     color = 0xFFFFFF        # 'On' color (starts red)
 
     # some control variables for light power on/off easing
-    _pow = 7
+    _pow = 2
     _frames = 50
     _maxb = 255    # _max_brightness, might change when brightness configuration is enabled
 

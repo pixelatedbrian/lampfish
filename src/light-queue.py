@@ -95,6 +95,7 @@ def run_strip(mode="off", brightness=255):
             count = 0
             const = _maxb**(1 /(_pow * 1.0))
             is_turning_off = True
+            strip.begin()
 
             while is_turning_off:
                 count += 1

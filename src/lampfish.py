@@ -31,6 +31,8 @@ def task_runner(var):
     for process in processes:
         process.kill()
 
+    print("task_runner -> var", var)
+
     process = multiprocessing.Process(target=run_strip, args=(var,))
 
 

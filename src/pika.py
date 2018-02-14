@@ -124,3 +124,7 @@ def run_strip(mode="off", brightness=255):
 
         except SystemError as err:
             print("SystemError:", err)
+
+
+if __name__ == "__main__":
+    consume_pika_queue()

@@ -105,7 +105,7 @@ def main():
 @app.route("/<action>")
 def action(action):
 
-    run_strip(action)
+    run_strip(mode=action)
     # # If the action part of the URL is "on," execute the code indented below:
     # if action == "on":
     #     # Set the pin high:

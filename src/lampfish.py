@@ -115,7 +115,9 @@ def action(action):
         lamp_on = False
         message = "Turned lamp off."
 
-    return render_template('main.html', lamp_on, message)
+    print("message: ", message)
+
+    return render_template('main.html', lamp_on)
 
 
 if __name__ == "__main__":

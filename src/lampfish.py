@@ -97,6 +97,7 @@ def task_runner(mode, brightness=255):
     print("task_runner -> var", mode)
 
     process = multiprocessing.Process(target=run_strip, args=(mode, brightness,))
+    process.start()
 
 
 @app.route("/")

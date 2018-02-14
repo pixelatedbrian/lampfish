@@ -31,7 +31,7 @@ strip = Adafruit_DotStar(numpixels, 12000000)
 # Append "order='gbr'" to declaration for proper colors w/older DotStar strips)
 
 
-def run_strip(brightness=255, mode="default"):
+def run_strip(brightness=255, mode="off"):
     # brightness is an integer from 1 to 255
     # mode, in time, should enable other things besides just being full on
 
@@ -46,32 +46,40 @@ def run_strip(brightness=255, mode="default"):
     # tail = -10             # Index of last 'off' pixel
     color = 0xFFFFFF        # 'On' color (starts red)
 
-    try:
-        while True:                              # Loop forever
-
-            for idx in range(numpixels):
-                strip.setPixelColor(idx, color)
-
-            # strip.setPixelColor(head, color) # Turn on 'head' pixel
-            # strip.setPixelColor(tail, 0)     # Turn off 'tail'
-            strip.show()                     # Refresh strip
-            time.sleep(1.0 / 50)             # Pause 20 milliseconds (~50 fps)
-
-            # head += 1                        # Advance head position
-            # if(head >= numpixels):           # Off end of strip?
-            #    head    = 0              # Reset to start
-            #    color >>= 8              # Red->green->blue->black
-            #    if(color == 0): color = 0xFF0000 # If black, reset to red
-
-            # tail += 1                        # Advance tail position
-            # if(tail >= numpixels): tail = 0  # Off end? Reset
-
-    except KeyboardInterrupt:
+    if mode is "off":
         print "cleaning up"
         GPIO.cleanup()
         strip.clear()
         strip.show()
         print "done"
+
+    elif mode is "on":
+        try:
+            while True:                              # Loop forever
+
+                for idx in range(numpixels):
+                    strip.setPixelColor(idx, color)
+
+                # strip.setPixelColor(head, color) # Turn on 'head' pixel
+                # strip.setPixelColor(tail, 0)     # Turn off 'tail'
+                strip.show()                     # Refresh strip
+                time.sleep(1.0 / 50)             # Pause 20 milliseconds (~50 fps)
+
+                # head += 1                        # Advance head position
+                # if(head >= numpixels):           # Off end of strip?
+                #    head    = 0              # Reset to start
+                #    color >>= 8              # Red->green->blue->black
+                #    if(color == 0): color = 0xFF0000 # If black, reset to red
+
+                # tail += 1                        # Advance tail position
+                # if(tail >= numpixels): tail = 0  # Off end? Reset
+
+        except KeyboardInterrupt:
+            print "cleaning up"
+            GPIO.cleanup()
+            strip.clear()
+            strip.show()
+            print "done"
 
 
 @app.route("/")
@@ -91,33 +99,23 @@ def main():
 
 
 # The function below is executed when someone requests a URL with the pin number and action in it:
-@app.route("/<changePin>/<action>")
-def action(changePin, action):
-    # Convert the pin from the URL into an integer:
-    changePin = int(changePin)
-    # Get the device name for the pin being changed:
-    deviceName = pins[changePin]['name']
+@app.route("/<action>")
+def action(action):
+
     # If the action part of the URL is "on," execute the code indented below:
     if action == "on":
         # Set the pin high:
-        GPIO.output(changePin, GPIO.HIGH)
+        run_strip(mode="on")
+        lamp_on = True
         # Save the status message to be passed into the template:
-        message = "Turned " + deviceName + " on."
+        message = "Turned lamp on."
 
     if action == "off":
-        GPIO.output(changePin, GPIO.LOW)
-        message = "Turned " + deviceName + " off."
+        run_strip(mode="off")
+        lamp_on = False
+        message = "Turned lamp off."
 
-    # For each pin, read the pin state and store it in the pins dictionary:
-    for pin in pins:
-        pins[pin]['state'] = GPIO.input(pin)
-
-    # Along with the pin dictionary, put the message into the template data dictionary:
-    templateData = {
-        'pins' : pins
-        }
-
-    return render_template('main.html', **mode_data)
+    return render_template('main.html', lamp_on, message)
 
 
 if __name__ == "__main__":

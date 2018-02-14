@@ -127,8 +127,9 @@ def run_strip(mode="off", brightness=255):
         strip.setBrightness(1)
 
         # clean up interrupts?
-        GPIO.cleanup()
-        # strip.clear()
+        # GPIO.cleanup()
+        strip.clear()
+        strip.show()
         # print("done")
 
     elif mode == "on":

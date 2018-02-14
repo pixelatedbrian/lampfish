@@ -26,16 +26,6 @@ app = Flask(__name__)
 # Append "order='gbr'" to declaration for proper colors w/older DotStar strips)
 
 
-def task_runner(mode, brightness=255):
-    processes = psutil.Process().children()
-    for process in processes:
-        process.kill()
-
-    print("task_runner -> var", mode)
-
-    process = multiprocessing.Process(target=run_strip, args=(mode, brightness,))
-
-
 def run_strip(mode="off", brightness=255):
     numpixels = 240     # Number of LEDs in strip
 
@@ -60,14 +50,14 @@ def run_strip(mode="off", brightness=255):
     color = 0xFFFFFF        # 'On' color (starts red)
 
     if mode == "off":
-        print("cleaning up")
+        print("run_strip: turn off strip")
         GPIO.cleanup()
         strip.clear()
         strip.show()
         print("done")
 
     elif mode == "on":
-        print("starting strip")
+        print("run_strip: starting strip")
         try:
             while True:                              # Loop forever
 
@@ -97,6 +87,16 @@ def run_strip(mode="off", brightness=255):
 
         except SystemError as err:
             print("SystemError:", err)
+
+
+def task_runner(mode, brightness=255):
+    processes = psutil.Process().children()
+    for process in processes:
+        process.kill()
+
+    print("task_runner -> var", mode)
+
+    process = multiprocessing.Process(target=run_strip, args=(mode, brightness,))
 
 
 @app.route("/")

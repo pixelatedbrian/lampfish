@@ -121,9 +121,13 @@ def run_strip(mode="off", brightness=255):
             strip.show()
             print "done"
 
+        # try to set color to black/off before turning off to prevent final flash
+        for idx in range(numpixels):
+            strip.setPixelColor(idx, 0x000000)
+
+        # clean up interrupts?
         GPIO.cleanup()
         strip.clear()
-        strip.show()
         print("done")
 
     elif mode == "on":

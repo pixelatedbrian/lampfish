@@ -39,9 +39,10 @@ def task_runner(mode, brightness=255):
 def run_strip(mode="off", brightness=255):
     numpixels = 240     # Number of LEDs in strip
 
+    print("run_strip inbound mode:", mode)
     # Here's how to control the strip from any two GPIO pins:
-    datapin = 10
-    clockpin = 11
+    # datapin = 10
+    # clockpin = 11
     strip = Adafruit_DotStar(numpixels, 12000000)
 
     # brightness is an integer from 1 to 255
@@ -58,14 +59,15 @@ def run_strip(mode="off", brightness=255):
     # tail = -10             # Index of last 'off' pixel
     color = 0xFFFFFF        # 'On' color (starts red)
 
-    if mode is "off":
-        print "cleaning up"
+    if mode == "off":
+        print("cleaning up")
         GPIO.cleanup()
         strip.clear()
         strip.show()
-        print "done"
+        print("done")
 
-    elif mode is "on":
+    elif mode == "on":
+        print("starting strip")
         try:
             while True:                              # Loop forever
 

@@ -86,6 +86,11 @@ def run_strip(mode="off", brightness=255):
     # tail = -10             # Index of last 'off' pixel
     color = 0xFFFFFF        # 'On' color (starts red)
 
+    # some control variables for light power on/off easing
+    _pow = 4
+    _frames = 50
+    _maxb = 255    # _max_brightness, might change when brightness configuration is enabled
+
     if mode == "off":
         print("run_strip: turn off strip")
         GPIO.cleanup()
@@ -96,6 +101,21 @@ def run_strip(mode="off", brightness=255):
     elif mode == "on":
         print("run_strip: starting strip")
         try:
+            count = 0
+            const = _maxb**(1 /(_pow * 1.0))
+            is_turning_on = True
+
+            if is_turning_on:
+                count += 1.0
+
+                if count == _frames:
+                    is_turning_on = False
+                    strip.setBrightness(_maxb)  # now that ramping is done set
+                                                # to max configured brightness
+                else:
+                    brightness = int((count / (_frames * 1.0) * const)**_pow)
+                    strip.setBrightness(brightness)
+
             while True:                              # Loop forever
 
                 for idx in range(numpixels):

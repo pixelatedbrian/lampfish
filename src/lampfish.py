@@ -54,7 +54,7 @@ def action(action):
 
         send_to_lights("on_255")
 
-    if action == "off":
+    elif action == "off":
         print("action -> Sent 'lamp off' to queue")
 
         send_to_lights("off_0")

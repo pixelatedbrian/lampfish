@@ -81,6 +81,9 @@ def run_strip(brightness=255, mode="off"):
             strip.show()
             print "done"
 
+        except SystemError as err:
+            print("SystemError:", err)
+
 
 @app.route("/")
 def main():

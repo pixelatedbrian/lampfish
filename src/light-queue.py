@@ -105,18 +105,18 @@ def run_strip(mode="off", brightness=255):
             const = _maxb**(1 /(_pow * 1.0))
             is_turning_on = True
 
-            if is_turning_on:
-                count += 1.0
-
-                if count == _frames:
-                    is_turning_on = False
-                    strip.setBrightness(_maxb)  # now that ramping is done set
-                                                # to max configured brightness
-                else:
-                    brightness = int((count / (_frames * 1.0) * const)**_pow)
-                    strip.setBrightness(brightness)
-
             while True:                              # Loop forever
+
+                if is_turning_on:
+                    count += 1.0
+
+                    if count == _frames:
+                        is_turning_on = False
+                        strip.setBrightness(_maxb)  # now that ramping is done set
+                                                    # to max configured brightness
+                    else:
+                        brightness = int((count / (_frames * 1.0) * const)**_pow)
+                        strip.setBrightness(brightness)
 
                 for idx in range(numpixels):
                     strip.setPixelColor(idx, color)

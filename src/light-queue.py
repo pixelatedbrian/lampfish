@@ -88,7 +88,7 @@ def run_strip(mode="off", brightness=255):
 
     # some control variables for light power on/off easing
     _pow = 2
-    _frames = 50
+    _frames = 100
     _maxb = 255    # _max_brightness, might change when brightness configuration is enabled
 
     if mode == "off":

@@ -95,29 +95,30 @@ def main():
     # templateData = {'pins': pins}
 
     # Pass the template data into the template main.html and return it to the user
-    return render_template('main.html', lamp_on=False, lamp_brightness=255)
+    return render_template('main.html', action="off", lamp_brightness=255)
 
 
 # The function below is executed when someone requests a URL with the pin number and action in it:
 @app.route("/<action>")
 def action(action):
 
-    # If the action part of the URL is "on," execute the code indented below:
-    if action == "on":
-        # Set the pin high:
-        run_strip(mode="on")
-        lamp_on = True
-        # Save the status message to be passed into the template:
-        message = "Turned lamp on."
+    run_strip(action)
+    # # If the action part of the URL is "on," execute the code indented below:
+    # if action == "on":
+    #     # Set the pin high:
+    #     run_strip(mode="on")
+    #     lamp_on = True
+    #     # Save the status message to be passed into the template:
+    #     message = "Turned lamp on."
+    #
+    # if action == "off":
+    #     run_strip(mode="off")
+    #     lamp_on = False
+    #     message = "Turned lamp off."
 
-    if action == "off":
-        run_strip(mode="off")
-        lamp_on = False
-        message = "Turned lamp off."
+    # print("message: ", message)
 
-    print("message: ", message)
-
-    return render_template('main.html', lamp_on)
+    return render_template('main.html', action)
 
 
 if __name__ == "__main__":

@@ -21,9 +21,6 @@ datapin = 10
 clockpin = 11
 strip = Adafruit_DotStar(numpixels, 12000000)
 
-mode_data = {"lamp_on": False,
-             "lamp_brigtness": 255}
-
 # Alternate ways of declaring strip:
 #  Adafruit_DotStar(npix, dat, clk, 1000000) # Bitbang @ ~1 MHz
 #  Adafruit_DotStar(npix)                    # Use SPI (pins 10=MOSI, 11=SCLK)
@@ -79,6 +76,8 @@ def run_strip(brightness=255, mode="default"):
 
 @app.route("/")
 def main():
+    mode_data = {"lamp_on": False,
+                 "lamp_brigtness": 255}
 
     # For each pin, read the pin state and store it in the pins dictionary:
     # for pin in pins:
@@ -89,6 +88,7 @@ def main():
 
     # Pass the template data into the template main.html and return it to the user
     return render_template('main.html', **mode_data)
+
 
 # The function below is executed when someone requests a URL with the pin number and action in it:
 @app.route("/<changePin>/<action>")

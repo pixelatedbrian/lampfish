@@ -68,9 +68,9 @@ def run_strip(mode="off", brightness=255):
 
     print("run_strip inbound mode:", mode)
     # Here's how to control the strip from any two GPIO pins:
-    # datapin = 10
-    # clockpin = 11
-    strip = Adafruit_DotStar(numpixels, 12000000)
+    datapin = 10
+    clockpin = 11
+    strip = Adafruit_DotStar(numpixels, datapin, clockpin)
 
     # brightness is an integer from 1 to 255
     # mode, in time, should enable other things besides just being full on

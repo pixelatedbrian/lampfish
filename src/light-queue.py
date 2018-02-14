@@ -105,7 +105,7 @@ def run_strip(mode="off", brightness=255):
                     strip.setBrightness(_maxb)  # now that ramping is done set
                                                 # to max configured brightness
                 else:
-                    brightness = int(255 - (count / (_frames * 1.0) * const)**_pow)
+                    brightness = int(_maxb - (count / (_frames * 1.0) * const)**_pow)
                     strip.setBrightness(brightness)
 
                 for idx in range(numpixels):
@@ -124,7 +124,7 @@ def run_strip(mode="off", brightness=255):
         # try to set color to black/off before turning off to prevent final flash
         for idx in range(numpixels):
             strip.setPixelColor(idx, 0x000000)
-        strip.setBrightness(0)
+        strip.setBrightness(1)
 
         # clean up interrupts?
         # GPIO.cleanup()

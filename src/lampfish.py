@@ -14,13 +14,6 @@ from dotstar import Adafruit_DotStar
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
-numpixels = 240     # Number of LEDs in strip
-
-# Here's how to control the strip from any two GPIO pins:
-datapin = 10
-clockpin = 11
-strip = Adafruit_DotStar(numpixels, 12000000)
-
 # Alternate ways of declaring strip:
 #  Adafruit_DotStar(npix, dat, clk, 1000000) # Bitbang @ ~1 MHz
 #  Adafruit_DotStar(npix)                    # Use SPI (pins 10=MOSI, 11=SCLK)
@@ -32,6 +25,13 @@ strip = Adafruit_DotStar(numpixels, 12000000)
 
 
 def run_strip(brightness=255, mode="off"):
+    numpixels = 240     # Number of LEDs in strip
+
+    # Here's how to control the strip from any two GPIO pins:
+    datapin = 10
+    clockpin = 11
+    strip = Adafruit_DotStar(numpixels, 12000000)
+
     # brightness is an integer from 1 to 255
     # mode, in time, should enable other things besides just being full on
 

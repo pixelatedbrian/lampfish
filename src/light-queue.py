@@ -75,11 +75,8 @@ def run_strip(mode="off", brightness=255):
     # brightness is an integer from 1 to 255
     # mode, in time, should enable other things besides just being full on
 
-    strip.begin()                       # Initialize pins for output
-    strip.setBrightness(brightness)     # Limit brightness to ~1/4 duty cycle
-
-    # Runs 10 LEDs at a time along strip, cycling through red, green and blue.
-    # This requires about 200 mA for all the 'on' pixels + 1 mA per 'off' pixel.
+    # strip.begin()                       # Initialize pins for output
+    # strip.setBrightness(brightness)     # Limit brightness to ~1/4 duty cycle
 
     # used for mode: comet
     # head = 0               # Index of first 'on' pixel
@@ -93,6 +90,36 @@ def run_strip(mode="off", brightness=255):
 
     if mode == "off":
         print("run_strip: turn off strip")
+
+        try:
+            count = 0
+            const = _maxb**(1 /(_pow * 1.0))
+            is_turning_off = True
+
+            while is_turning_off:
+                count += 1
+
+                if count == _frames:
+                    is_turning_off = False
+                    strip.setBrightness(_maxb)  # now that ramping is done set
+                                                # to max configured brightness
+                else:
+                    brightness = int(255 - (count / (_frames * 1.0) * const)**_pow)
+                    strip.setBrightness(brightness)
+
+                for idx in range(numpixels):
+                    strip.setPixelColor(idx, color)
+
+                strip.show()                     # Refresh strip
+                time.sleep(1.0 / 50)
+
+        except KeyboardInterrupt:
+            print "cleaning up"
+            GPIO.cleanup()
+            strip.clear()
+            strip.show()
+            print "done"
+
         GPIO.cleanup()
         strip.clear()
         strip.show()
@@ -104,6 +131,8 @@ def run_strip(mode="off", brightness=255):
             count = 0
             const = _maxb**(1 /(_pow * 1.0))
             is_turning_on = True
+
+            strip.begin()
 
             while True:                              # Loop forever
 

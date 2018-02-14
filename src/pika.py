@@ -53,7 +53,7 @@ def consume_pika_queue():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
 
-    channel.queue_declare(queue='hello')
+    channel.queue_declare(queue='lampfish')
 
     channel.basic_consume(callback,
                           queue="lampfish",

@@ -12,6 +12,8 @@ import time
 import RPi.GPIO as GPIO
 from dotstar import Adafruit_DotStar
 from flask import Flask, render_template, request
+import multiprocessing
+import psutil
 app = Flask(__name__)
 
 # Alternate ways of declaring strip:
@@ -24,7 +26,15 @@ app = Flask(__name__)
 # Append "order='gbr'" to declaration for proper colors w/older DotStar strips)
 
 
-def run_strip(brightness=255, mode="off"):
+def task_runner(var):
+    processes = psutil.Process().children()
+    for process in processes:
+        process.kill()
+
+    process = multiprocessing.Process(target=run_strip, args=(var,))
+
+
+def run_strip(mode="off", brightness=255):
     numpixels = 240     # Number of LEDs in strip
 
     # Here's how to control the strip from any two GPIO pins:

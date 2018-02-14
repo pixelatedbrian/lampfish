@@ -12,7 +12,7 @@
 <body>
    <h1>RPi Web Server</h1>
 
-   {% if mode_data["lamp_on"].state == true %}
+   {% if mode_data["lamp_on"] == true %}
       is currently <strong>on</strong></h2><div class="row"><div class="col-md-2">
       <a href="/{{pin}}/off" class="btn btn-block btn-lg btn-default" role="button">Turn off</a></div></div>
    {% else %}

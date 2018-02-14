@@ -116,6 +116,7 @@ def main():
 def action(action):
 
     print("action", action)
+    task_runner(mode=action)
     # run_strip(mode=action)
     # # If the action part of the URL is "on," execute the code indented below:
     # if action == "on":

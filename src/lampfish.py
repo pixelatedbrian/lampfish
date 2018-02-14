@@ -26,14 +26,14 @@ app = Flask(__name__)
 # Append "order='gbr'" to declaration for proper colors w/older DotStar strips)
 
 
-def task_runner(var):
+def task_runner(mode, brightness=255):
     processes = psutil.Process().children()
     for process in processes:
         process.kill()
 
-    print("task_runner -> var", var)
+    print("task_runner -> var", mode)
 
-    process = multiprocessing.Process(target=run_strip, args=(var,))
+    process = multiprocessing.Process(target=run_strip, args=(mode, brightness,))
 
 
 def run_strip(mode="off", brightness=255):

@@ -115,11 +115,11 @@ def run_strip(mode="off", brightness=255):
                 time.sleep(1.0 / 50)
 
         except KeyboardInterrupt:
-            print "cleaning up"
+            print("cleaning up")
             GPIO.cleanup()
             strip.clear()
             strip.show()
-            print "done"
+            print("done")
 
         # try to set color to black/off before turning off to prevent final flash
         for idx in range(numpixels):
@@ -172,11 +172,11 @@ def run_strip(mode="off", brightness=255):
                 # if(tail >= numpixels): tail = 0  # Off end? Reset
 
         except KeyboardInterrupt:
-            print "cleaning up"
+            print("cleaning up")
             GPIO.cleanup()
             strip.clear()
             strip.show()
-            print "done"
+            print("done")
 
         except SystemError as err:
             print("SystemError:", err)
